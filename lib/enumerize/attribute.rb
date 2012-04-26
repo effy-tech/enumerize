@@ -1,13 +1,19 @@
 module Enumerize
   class Attribute
-    attr_reader :name, :values, :default_value
+    attr_reader :name, :values, :default_value, :data
 
     def initialize(klass, name, options={})
       raise ArgumentError, ':in option is required' unless options[:in]
 
       @klass  = klass
       @name   = name.to_sym
-      @values = Array(options[:in]).map { |v| Value.new(self, v) }
+      if options[:in].instance_of?(Hash)
+        @data  = options[:in]
+        values = options[:in].keys
+      else
+        values = options[:in]
+      end
+      @values = Array(values).map { |v| Value.new(self, v) }
       @value_hash = Hash[@values.map { |v| [v.to_s, v] }]
 
       if options[:default]
