@@ -103,7 +103,7 @@ module Enumerize
     private
 
     def _enumerized_values_for_validation
-      @_enumerized_values_for_validation ||= ActiveSupport::HashWithIndifferentAccess.new
+      @_enumerized_values_for_validation ||= {}
     end
   end
 end
